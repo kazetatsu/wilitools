@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
@@ -91,7 +92,11 @@ def get_overview(
         )
 
     # draw node=motion
-    font = ImageFont.truetype('/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf', size=font_size)
+    font_path = os.path.join(
+        os.path.dirname(__file__), 
+        'kazetatsu-num.ttf'
+    )
+    font = ImageFont.truetype(font_path, size=font_size)
     for i in range(n):
         bbox = [
             centers[i,0] - icon_radius, centers[i,1] - icon_radius,
