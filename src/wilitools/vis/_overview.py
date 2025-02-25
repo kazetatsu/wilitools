@@ -25,7 +25,7 @@ def get_overview(
     font_size   = int(coef * 50)
     ah_size     = int(coef * 20) # arrow head size
 
-    img = Image.new('LA', img_size, (0,0))
+    img = Image.new('RGBA', img_size, (0,0,0,0))
     draw = ImageDraw.Draw(img)
 
     temp = tr_prob.flatten().argsort()
@@ -56,7 +56,7 @@ def get_overview(
             draw.arc(
                 box,
                 0, 360,
-                fill=(0, strength),width=line_width
+                fill=(0,0,0, strength),width=line_width
             )
             ah_s = np.array([centers[f,0] + 1.92 * icon_radius, centers[f,1]]) # arrow head start
             ah_tan = np.array([-0.2, 0.98]) # arrow head tangent
@@ -72,7 +72,7 @@ def get_overview(
             ah_s = (s + e) / 2 # arrow head start
             draw.line(
                 box,
-                fill=(0,strength), width=line_width
+                fill=(0,0,0,strength), width=line_width
             )
 
         # Draw arrow head
@@ -81,14 +81,14 @@ def get_overview(
         bbox = [int(v) for v in bbox]
         draw.line(
             bbox,
-            fill=(0,strength), width=line_width
+            fill=(0,0,0,strength), width=line_width
         )
         ah_e = ah_s + ah_size * r_ah.T @ ah_tan
         bbox = [ah_s[0], ah_s[1], ah_e[0], ah_e[1]]
         bbox = [int(v) for v in bbox]
         draw.line(
             bbox,
-            fill=(0,strength), width=line_width
+            fill=(0,0,0,strength), width=line_width
         )
 
     # draw node=motion
@@ -105,14 +105,14 @@ def get_overview(
         bbox = [int(v) for v in bbox]
         draw.ellipse(
             bbox,
-            fill=(255,255), outline=(0,255), width=line_width
+            fill=(255,255,255,255), outline=(0,0,0,255), width=line_width
         )
 
         c = [centers[i,0], centers[i,1]]
         c = [int(v) for v in c]
         draw.text(
             c, '{}'.format(i + 1),
-            font=font, anchor='mm', fill=(0, 255)
+            font=font, anchor='mm', fill=(0,0,0,255)
         )
 
     return img
